@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/elqta/Downloads/frontend_web/windows/runner
+# Install script for directory: C:/ParqueateBien/parqueatebien/windows/runner
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

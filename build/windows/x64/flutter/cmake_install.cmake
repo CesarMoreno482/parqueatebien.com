@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/elqta/Downloads/frontend_web/windows/flutter
+# Install script for directory: C:/ParqueateBien/parqueatebien/windows/flutter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
