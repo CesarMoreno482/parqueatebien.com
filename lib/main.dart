@@ -121,7 +121,7 @@ class _MainAppState extends State<MainApp> {
                   children: [
                     Image.asset(
                       'assets/image/LOGO_PARQUEATE.png',
-                      height: 125,
+                      height: 25,
                       fit: BoxFit.cover,
                     ),
                     const SizedBox(height: 100),
