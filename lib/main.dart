@@ -51,7 +51,7 @@ class _MainAppState extends State<MainApp> {
     String licensePlate = _licensePlateController.text;
     try {
       var response = await http
-          .get(Uri.parse('https://demooriontek.azurewebsites.net/ciudadanos/$licensePlate'));
+          .get(Uri.parse('https://parqueatebiendemo.azurewebsites.net/ciudadanos/$licensePlate'));
       if (response.statusCode == 200) {
         var citizen = parseResponse(response.body);
         Navigator.push(
