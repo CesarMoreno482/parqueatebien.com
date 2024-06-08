@@ -24,6 +24,7 @@ flutter:
     - assets/image/fondo_splash.png
     - assets/image/LOGO_INTRANT.png
     - assets/image/LOGO_PARQUEATE.png
+    - web/icons/
 
 flutter_native_splash:
   android: false

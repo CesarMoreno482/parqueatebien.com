@@ -135,22 +135,35 @@ class _MainAppState extends State<MainApp> {
                         ),
                       ),
                     ),
-                    const SizedBox(height:50),
-                    SizedBox(
-                      width: constraints.maxWidth * 0.8,
-                      child: TextField(
-                        controller: _licensePlateController,
-                        decoration: const InputDecoration(
-                          labelText: 'Ingresar Dígitos De Placa',
-                          border: OutlineInputBorder(),
-                           filled: true,
-                        fillColor: Colors.white,
+                    const SizedBox(height: 50),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Placa:',
+                          style: TextStyle(
+                            fontSize: 15,
+                           color: Color.fromARGB(255, 1, 15, 117),
+                          ),
                         ),
-                        maxLength: 7,
-                        onChanged: (value) {
-                          setState(() {});
-                        },
-                      ),
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          width: constraints.maxWidth * 0.8,
+                          child: TextField(
+                            controller: _licensePlateController,
+                            decoration: const InputDecoration(
+                              hintText: 'Ingresar Dígitos De Placa',
+                              border: OutlineInputBorder(),
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 228, 237, 255),
+                            ),
+                            maxLength: 7,
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     Spacer(),
                     if (_isLoading) ...[
@@ -159,7 +172,7 @@ class _MainAppState extends State<MainApp> {
                     ],
                     if (_errorMessage.isNotEmpty) ...[
                       Text(_errorMessage),
-                      const SizedBox(height: 400),
+                      const SizedBox(height: 50),
                     ],
                     _buildConsultButton(),
                   ],
@@ -176,7 +189,7 @@ class _MainAppState extends State<MainApp> {
     return Align(
       alignment: Alignment.center,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 75.0), // Ajusta el margen inferior aquí
+        padding: const EdgeInsets.only(bottom: 20.0), // Ajusta el margen inferior aquí
         child: SizedBox(
           width: 300,
           child: ElevatedButton(
