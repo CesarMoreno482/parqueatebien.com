@@ -103,7 +103,7 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50.0,
+        toolbarHeight: 10.0,
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -121,10 +121,10 @@ class _MainAppState extends State<MainApp> {
                   children: [
                     Image.asset(
                       'assets/image/LOGO_PARQUEATE.png',
-                      height: 25,
+                      height: 125,
                       fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 50),
                     Center(
                       child: Text(
                         'INTRODUZCA EL NÚMERO DE PLACA DE SU VEHÍCULO',
@@ -143,6 +143,8 @@ class _MainAppState extends State<MainApp> {
                         decoration: const InputDecoration(
                           labelText: 'Ingresar Dígitos De Placa',
                           border: OutlineInputBorder(),
+                           filled: true,
+                        fillColor: Colors.white,
                         ),
                         maxLength: 7,
                         onChanged: (value) {
@@ -173,28 +175,31 @@ class _MainAppState extends State<MainApp> {
   Widget _buildConsultButton() {
     return Align(
       alignment: Alignment.center,
-      child: SizedBox(
-        width: 300,
-        child: ElevatedButton(
-          onPressed:
-              _licensePlateController.text.length == 7 ? _getCitizen : null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: _licensePlateController.text.length == 7
-                ? Color.fromARGB(255, 0, 18, 153)
-                : Colors.grey,
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 75.0), // Ajusta el margen inferior aquí
+        child: SizedBox(
+          width: 300,
+          child: ElevatedButton(
+            onPressed:
+                _licensePlateController.text.length == 7 ? _getCitizen : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _licensePlateController.text.length == 7
+                  ? Color.fromARGB(255, 1, 15, 86)
+                  : Colors.grey,
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
-          ),
-          child: _isLoading
-              ? CircularProgressIndicator()
-              : const Text(
-                  'consultar',
-                  style: TextStyle(
-                    color: Colors.white,
+            child: _isLoading
+                ? CircularProgressIndicator()
+                : const Text(
+                    'consultar',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );
