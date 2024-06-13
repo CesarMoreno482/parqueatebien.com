@@ -79661,7 +79661,7 @@ case"liberado":return B.rr
 case"incautado por grua":return B.rt
 default:return B.dO}},
 N(a){var s=this,r=null,q=A.aj8(r,r,A.cT("Informaci\xf3n del Veh\xedculo",r,r,r,r,r,r),r),p=A.dg(A.GY("assets/image/LOGO_PARQUEATE.png",B.db,100),r,r),o=A.dg(A.cT("Datos del Veh\xedculo",r,r,r,A.cW(r,r,r,r,r,r,r,r,r,r,r,24,r,r,B.bl,r,r,!0,r,r,r,r,r,r,r,r),r,r),r,r),n=s.r,m=A.ajE(r,r,s.a1y(n),r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r),l=t.E
-m=A.b([p,B.jH,o,B.jJ,A.dg(A.ajD(A.cT(n,r,r,r,A.cW(r,r,B.j,r,r,r,r,r,r,r,r,r,r,r,r,r,r,!0,r,r,r,r,r,r,r,r),r,r),new A.a3W(),m),r,r),B.KJ,A.dg(A.apA(A.b([A.cT("MAS INFORMACION",r,r,r,r,r,r),A.ajT(r,A.ajS(B.CJ,r),new A.a3X(s,a),r,r)],l),B.ba,B.fh),r,r),B.KL],l)
+m=A.b([p,B.jH,o,B.jJ,A.dg(A.ajD(A.cT(n,r,r,r,A.cW(r,r,B.j,r,r,r,r,r,r,r,r,r,r,r,r,r,r,!0,r,r,r,r,r,r,r,r),r,r),new A.a3W(),m),r,r),B.KI,A.dg(A.apA(A.b([A.cT("MAS INFORMACION",r,r,r,r,r,r),A.ajT(r,A.ajS(B.CJ,r),new A.a3X(s,a),r,r)],l),B.ba,B.fh),r,r),B.KL],l)
 if(n.toLowerCase()!=="liberado"){p=A.b([s.uY("N\xfamero de Placa",s.c),A.XQ(50),s.uY("Tipo de Veh\xedculo",s.d),A.XQ(50),s.uY("Color",s.e),A.XQ(50),s.uY("Ubicaci\xf3n de la Retenci\xf3n",s.f),A.XQ(50)],l)
 o=s.ax
 if(o.length!==0){n=A.a1(o).i("aa<1,dJ>")
@@ -79691,10 +79691,10 @@ case"incautado por grua":return B.rt
 default:return B.dO}},
 N(a){var s=this,r=null,q=4278259542,p=A.aj8(r,r,A.cT("",r,r,r,r,r,r),r),o=A.dg(A.GY("assets/image/LOGO_PARQUEATE.png",B.db,100),r,r),n=A.dg(A.cT("Infomacion del reporte",r,r,r,A.cW(r,r,new A.x(q),r,r,r,r,r,r,r,r,24,r,r,B.bl,r,r,!0,r,r,r,r,r,r,r,r),r,r),r,r),m=A.dg(A.cT("Status:",r,r,r,A.cW(r,r,r,r,r,r,r,r,r,r,r,24,r,r,B.bl,r,r,!0,r,r,r,r,r,r,r,r),r,r),r,r),l=s.e,k=A.ajE(r,r,s.Zb(l),r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r),j=t.E
 k=A.b([o,B.jJ,n,B.jI,m,B.jH,A.dg(A.ajD(A.cT(l,r,r,r,A.cW(r,r,B.j,r,r,r,r,r,r,r,r,r,r,r,r,r,r,!0,r,r,r,r,r,r,r,r),r,r),new A.a5E(),k),r,r),B.jH,A.dg(A.hv(A.b([s.Ae("Fecha y Hora de Incautaci\xf3n",s.r),s.Ae("Ubicaci\xf3n Actual",s.f),s.Ae("Fecha y Hora de Llegada al Centro",s.x)],j),B.ba,B.aZ,B.bd),r,r)],j)
-if(l.toLowerCase()==="retenido"){o=A.cT("Instrucciones para Sacar el Veh\xedculo",r,r,r,A.cW(r,r,new A.x(q),r,r,r,r,r,r,r,r,18,r,r,B.bl,r,r,!0,r,r,r,r,r,r,r,r),r,r)
+if(l.toLowerCase()==="retenido"){o=A.cT("Instrucciones para la recuperacion de su vehiculo",r,r,r,A.cW(r,r,new A.x(q),r,r,r,r,r,r,r,r,18,r,r,B.bl,r,r,!0,r,r,r,r,r,r,r,r),r,r)
 n=A.amN(A.U(255,136,155,252))
 m=A.Eo(10)
-B.b.M(k,A.b([B.KI,A.dg(A.hv(A.b([o,B.eb,A.mQ(r,A.cT('PUEDE LIBERAR SU VEHICULO VISITANDO EL CENTRO DE RETENCION DE VEHICULOS DE PROGRAMA "PARQUEATE BIEN" UBICADO EN LA AVENIDA TIRADENTES #17, SECTOR NACO, EN HORARIOS D 8:00AM a 7:00PM ',r,r,r,A.cW(r,r,r,r,r,r,r,r,r,r,r,20,r,r,r,r,r,!0,r,r,r,r,r,r,r,r),r,r),B.w,r,new A.aq(0,1/0,150,1/0),new A.dD(r,r,n,m,r,r,B.aO),r,r,B.eH,400),B.eb],j),B.ba,B.aZ,B.bd),r,r)],j))}return A.a64(p,A.akp(A.hv(k,B.dp,B.aZ,B.bd),B.eH))},
+B.b.M(k,A.b([B.KK,A.dg(A.hv(A.b([o,B.eb,A.mQ(r,A.cT('Puede liberar su veh\xedculo visitando el Centro de Retenci\xf3n de Veh\xedculos del programa "Parqu\xe9ate Bien", ubicado en la Avenida Tiradentes #17, sector Naco, en horarios de 8:00 AM a 7:00 PM.',r,r,r,A.cW(r,r,r,r,r,r,r,r,r,r,r,20,r,r,r,r,r,!0,r,r,r,r,r,r,r,r),r,r),B.w,r,new A.aq(0,1/0,150,1/0),new A.dD(r,r,n,m,r,r,B.aO),r,r,B.eH,400),B.eb],j),B.ba,B.aZ,B.bd),r,r)],j))}return A.a64(p,A.akp(A.hv(k,B.dp,B.aZ,B.bd),B.eH))},
 Ae(a,b){var s=null
 return A.hv(A.b([A.cT(a,s,s,s,A.cW(s,s,new A.x(4278259542),s,s,s,s,s,s,s,s,18,s,s,B.bl,s,s,!0,s,s,s,s,s,s,s,s),s,s),A.cT(b,s,s,s,A.cW(s,s,s,s,s,s,s,s,s,s,s,18,s,s,s,s,s,!0,s,s,s,s,s,s,s,s),s,s),B.eb],t.E),B.ba,B.aZ,B.bd)}}
 A.a5E.prototype={
@@ -79798,7 +79798,7 @@ $S:0}
 A.adv.prototype={
 $2(a,b){var s=null,r=A.GY("assets/image/LOGO_PARQUEATE.png",B.db,125),q=A.dg(A.cT("INTRODUZCA EL N\xdaMERO DE PLACA DE SU VEH\xcdCULO",s,s,s,A.cW(s,s,new A.x(4278259542),s,s,s,s,s,s,s,s,17,s,s,B.bl,s,s,!0,s,s,s,s,s,s,s,s),s,s),s,s),p=A.cT("Placa:",s,s,s,A.cW(s,s,A.U(255,1,15,117),s,s,s,s,s,s,s,s,15,s,s,s,s,s,!0,s,s,s,s,s,s,s,s),s,s),o=this.a,n=o.d,m=t.E
 p=A.b([r,B.jI,q,B.jI,A.hv(A.b([p,B.jJ,A.hc(new A.z1(n,B.CZ,B.LP,B.KN,B.KO,7,new A.adu(o),!0,s),s,b.b*0.8)],m),B.dp,B.aZ,B.bd),new A.Kc(s)],m)
-if(o.e)B.b.M(p,A.b([A.amZ(),B.KK],m))
+if(o.e)B.b.M(p,A.b([A.amZ(),B.KJ],m))
 r=o.f
 if(r.length!==0)B.b.M(p,A.b([A.cT(r,s,s,s,s,s,s),B.KH],m))
 r=n.a.a.length===7
@@ -84276,9 +84276,9 @@ B.KF=new A.J(77.37,37.9)
 B.an=new A.dJ(0,0,null,null)
 B.jH=new A.dJ(null,16,null,null)
 B.KH=new A.dJ(null,1,null,null)
-B.KI=new A.dJ(null,200,null,null)
-B.KJ=new A.dJ(null,20,null,null)
-B.KK=new A.dJ(null,2,null,null)
+B.KI=new A.dJ(null,20,null,null)
+B.KJ=new A.dJ(null,2,null,null)
+B.KK=new A.dJ(null,30,null,null)
 B.jI=new A.dJ(null,50,null,null)
 B.jJ=new A.dJ(null,5,null,null)
 B.KL=new A.dJ(null,60,null,null)

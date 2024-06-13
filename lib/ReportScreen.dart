@@ -91,22 +91,28 @@ class ReportScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16.0),
-            Center(
-              child: Column(
-                children: [
-                  _buildInfoRow('Fecha y Hora de Incautación', reportedDate),
-                  
-                  _buildInfoRow('Ubicación Actual', currentAddress),
-                  _buildInfoRow('Fecha y Hora de Llegada al Centro', arrivalAtParkinglot),
-                ],
-              ),
-            ),
-            if (status.toLowerCase() == 'retenido') ...[
-              const SizedBox(height: 200),
-              Center(
-                child: _buildTextBox('Instrucciones para Sacar el Vehículo', 'PUEDE LIBERAR SU VEHICULO VISITANDO EL CENTRO DE RETENCION DE VEHICULOS DE PROGRAMA "PARQUEATE BIEN" UBICADO EN LA AVENIDA TIRADENTES #17, SECTOR NACO, EN HORARIOS D 8:00AM a 7:00PM '),
-              ),
-            ],
+           
+            
+  Center(
+    child: Column(
+      children: [
+        _buildInfoRow('Fecha y Hora de Incautación', reportedDate),
+        _buildInfoRow('Ubicación Actual', currentAddress),
+        _buildInfoRow('Fecha y Hora de Llegada al Centro', arrivalAtParkinglot),
+      ],
+    ),
+  ),
+
+           if (status.toLowerCase() == 'retenido') ...[
+  const SizedBox(height: 30),
+  Center(
+    child: _buildTextBox(
+      'Instrucciones para la recuperacion de su vehiculo',
+      'Puede liberar su vehículo visitando el Centro de Retención de Vehículos del programa "Parquéate Bien", ubicado en la Avenida Tiradentes #17, sector Naco, en horarios de 8:00 AM a 7:00 PM.',
+    ),
+  ),
+],
+            
           ],
         ),
       ),
