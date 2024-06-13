@@ -43,17 +43,22 @@ class _MainAppState extends State<MainApp> {
   }
 
   Future<void> _getCitizen() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = '';
-    });
+  setState(() {
+    _isLoading = true;
+    _errorMessage = '';
+  });
 
-    String licensePlate = _licensePlateController.text;
-    try {
-      var response = await http
-          .get(Uri.parse('https://parqueatebiendemo.azurewebsites.net/ciudadanos/$licensePlate'));
-      if (response.statusCode == 200) {
-        var citizen = parseResponse(response.body);
+  String licensePlate = _licensePlateController.text;
+  try {
+    var response = await http.get(
+        Uri.parse('https://parqueatebiendemo.azurewebsites.net/ciudadanos/$licensePlate'));
+    if (response.statusCode == 200) {
+      var citizen = parseResponse(response.body);
+      if (citizen.status.toLowerCase() == 'liberado') {
+        setState(() {
+          _errorMessage = 'No hay reportes activos para esta placa';
+        });
+      } else {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -70,29 +75,30 @@ class _MainAppState extends State<MainApp> {
               releaseDate: citizen.releaseDate,
               lat: citizen.lat,
               lon: citizen.lon,
-              photos: citizen.photos,
+              photos: citizen.photos.map((photo) => photo.file).toList(),
             ),
           ),
         );
-      } else if (response.statusCode == 404) {
-        setState(() {
-          _errorMessage = 'Incauto not found';
-        });
-      } else {
-        setState(() {
-          _errorMessage = 'Invalid plate: ${response.statusCode}';
-        });
       }
-    } catch (e) {
+    } else if (response.statusCode == 404) {
       setState(() {
-        _errorMessage = 'Error: $e';
+        _errorMessage = 'Incauto no encontrado';
       });
-    } finally {
+    } else {
       setState(() {
-        _isLoading = false;
+        _errorMessage = 'Placa inválida: ${response.statusCode}';
       });
     }
+  } catch (e) {
+    setState(() {
+      _errorMessage = 'Error: $e';
+    });
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
   }
+}
 
   Citizen parseResponse(String responseBody) {
     final parsed = json.decode(responseBody);
@@ -143,7 +149,7 @@ class _MainAppState extends State<MainApp> {
                           'Placa:',
                           style: TextStyle(
                             fontSize: 15,
-                           color: Color.fromARGB(255, 1, 15, 117),
+                            color: Color.fromARGB(255, 1, 15, 117),
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -168,11 +174,11 @@ class _MainAppState extends State<MainApp> {
                     Spacer(),
                     if (_isLoading) ...[
                       CircularProgressIndicator(),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 2),
                     ],
                     if (_errorMessage.isNotEmpty) ...[
                       Text(_errorMessage),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 1),
                     ],
                     _buildConsultButton(),
                   ],
@@ -189,12 +195,11 @@ class _MainAppState extends State<MainApp> {
     return Align(
       alignment: Alignment.center,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0), // Ajusta el margen inferior aquí
+        padding: const EdgeInsets.only(bottom: 400.0), // Ajusta el margen inferior aquí
         child: SizedBox(
           width: 300,
           child: ElevatedButton(
-            onPressed:
-                _licensePlateController.text.length == 7 ? _getCitizen : null,
+            onPressed: _licensePlateController.text.length == 7 ? _getCitizen : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: _licensePlateController.text.length == 7
                   ? Color.fromARGB(255, 1, 15, 86)

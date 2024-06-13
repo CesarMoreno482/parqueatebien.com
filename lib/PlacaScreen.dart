@@ -3,19 +3,19 @@ import 'dart:convert';
 import 'ReportScreen.dart';
 
 class PlacaScreen extends StatelessWidget {
- final String licensePlate;
- final String vehicleType;
- final String vehicleColor;
- final String address;
- final String status;
- final String currentAddress;
- final String reportedDate;
- final String towedByCraneDate;
- final String arrivalAtParkinglot;
- final String releaseDate;
- final String lat;
- final String lon;
- final List photos;
+  final String licensePlate;
+  final String vehicleType;
+  final String vehicleColor;
+  final String address;
+  final String status;
+  final String currentAddress;
+  final String reportedDate;
+  final String towedByCraneDate;
+  final String arrivalAtParkinglot;
+  final String releaseDate;
+  final String lat;
+  final String lon;
+  final List<String> photos; // Asegúrate de que esta es una lista de cadenas base64
 
   PlacaScreen({
     required this.licensePlate,
@@ -52,34 +52,7 @@ class PlacaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
-        actions: [
-          Row(
-            children: [
-              Text('INFO'),
-              IconButton(
-                icon: Icon(Icons.info),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReportScreen(
-                        licensePlate: licensePlate,
-                        address: address,
-                        status: status,
-                        reportedDate: reportedDate,
-                        towedByCraneDate: towedByCraneDate,
-                        currentAddress: currentAddress,
-                        arrivalAtParkinglot: arrivalAtParkinglot,
-                        releaseDate: releaseDate,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+        title: Text('Información del Vehículo'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -110,8 +83,7 @@ class PlacaScreen extends StatelessWidget {
                   // Acción del botón
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _getButtonColor(
-                      status), // Color del botón según el estado
+                  backgroundColor: _getButtonColor(status),
                 ),
                 child: Text(
                   '$status',
@@ -119,60 +91,81 @@ class PlacaScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 60,
-            ),
+            const SizedBox(height: 20.0),
             Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildInfoRow('Número de Placa', licensePlate),
-                  Divider(
-                    height: 50,
-                  ),
-                  _buildInfoRow('Tipo de Vehículo', vehicleType),
-                  Divider(
-                    height: 50,
-                  ),
-                  _buildInfoRow('Color', vehicleColor),
-                  Divider(
-                    height: 50,
-                  ),
-                  _buildInfoRow('Ubicación de la Retención', address),
-                  Divider(
-                    height: 50,
-                  ),
-                  if (photos.isNotEmpty) ...[
-                    Text(
-                      'Fotos del Vehículo',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF010F56),
-                      ),
-                    ),
-                    const SizedBox(height: 8.0),
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: 8.0,
-                      children: photos.map((photo) {
-                        return SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4.0),
-                            child: Image.memory(
-                              base64Decode(photo.file),
-                              fit: BoxFit.cover,
-                            ),
+                  Text('MAS INFORMACION'),
+                  IconButton(
+                    icon: Icon(Icons.info),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReportScreen(
+                            licensePlate: licensePlate,
+                            address: address,
+                            status: status,
+                            reportedDate: reportedDate,
+                            towedByCraneDate: towedByCraneDate,
+                            currentAddress: currentAddress,
+                            arrivalAtParkinglot: arrivalAtParkinglot,
+                            releaseDate: releaseDate,
                           ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
+            const SizedBox(height: 60),
+            if (status.toLowerCase() != 'liberado') ...[
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildInfoRow('Número de Placa', licensePlate),
+                    Divider(height: 50),
+                    _buildInfoRow('Tipo de Vehículo', vehicleType),
+                    Divider(height: 50),
+                    _buildInfoRow('Color', vehicleColor),
+                    Divider(height: 50),
+                    _buildInfoRow('Ubicación de la Retención', address),
+                    Divider(height: 50),
+                    if (photos.isNotEmpty) ...[
+                      Text(
+                        'Fotos del Vehículo',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF010F56),
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: photos.map((photo) {
+                          return SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4.0),
+                              child: Image.memory(
+                                base64Decode(photo),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),
