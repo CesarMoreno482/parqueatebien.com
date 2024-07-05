@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'PlacaScreen.dart';
 import 'SplashScreen.dart';
+import 'dart:io';
 
 void main() {
   runApp(MyApp());
@@ -41,8 +42,7 @@ class _MainAppState extends State<MainApp> {
     _licensePlateController.dispose();
     super.dispose();
   }
-
-  Future<void> _getCitizen() async {
+Future<void> _getCitizen() async {
   setState(() {
     _isLoading = true;
     _errorMessage = '';
@@ -51,30 +51,46 @@ class _MainAppState extends State<MainApp> {
   String licensePlate = _licensePlateController.text;
   try {
     var response = await http.get(
-        Uri.parse('https://parqueatebiendemo.azurewebsites.net/ciudadanos/$licensePlate'));
+      Uri.parse('http://localhost:8089/api/reporte/$licensePlate'),
+    );
+
     if (response.statusCode == 200) {
       var citizen = parseResponse(response.body);
+
       if (citizen.status.toLowerCase() == 'liberado') {
         setState(() {
           _errorMessage = 'No hay reportes activos para esta placa';
         });
       } else {
+        double lat = 0.0;
+        double lon = 0.0;
+
+        try {
+          lat = double.parse(citizen.lat);
+          lon = double.parse(citizen.lon);
+        } catch (e) {
+          print('Error al convertir latitud o longitud: $e');
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => PlacaScreen(
+              registrationNumber: citizen.registrationNumber,
               licensePlate: citizen.licensePlate,
+              registrationDocument: citizen.registrationDocument,
               vehicleType: citizen.vehicleType,
-              address: citizen.address,
               vehicleColor: citizen.vehicleColor,
+              model: citizen.model,
+              year: citizen.year,
+              reference: citizen.reference,
               status: citizen.status,
-              currentAddress: citizen.currentAddress,
               reportedDate: citizen.reportedDate,
               towedByCraneDate: citizen.towedByCraneDate,
               arrivalAtParkinglot: citizen.arrivalAtParkinglot,
               releaseDate: citizen.releaseDate,
-              lat: citizen.lat,
-              lon: citizen.lon,
+              lat: lat,
+              lon: lon,
               photos: citizen.photos.map((photo) => photo.file).toList(),
             ),
           ),
@@ -86,20 +102,33 @@ class _MainAppState extends State<MainApp> {
       });
     } else {
       setState(() {
-        _errorMessage = 'Placa inválida: ${response.statusCode}';
+        _errorMessage = 'Error al consultar la placa: ${response.statusCode}';
       });
     }
   } catch (e) {
-    setState(() {
-      _errorMessage = 'Error: $e';
-    });
+    if (e is SocketException) {
+      setState(() {
+        _errorMessage = 'No se pudo conectar al servidor. Verifique su conexión a Internet.';
+      });
+    } else if (e is HttpException) {
+      setState(() {
+        _errorMessage = 'Error de servidor: ${e.message}';
+      });
+    } else if (e is FormatException) {
+      setState(() {
+        _errorMessage = 'Respuesta de formato incorrecto.';
+      });
+    } else {
+      setState(() {
+        _errorMessage = 'Error desconocido: $e';
+      });
+    }
   } finally {
     setState(() {
       _isLoading = false;
     });
   }
 }
-
   Citizen parseResponse(String responseBody) {
     final parsed = json.decode(responseBody);
     return Citizen.fromJson(parsed);
@@ -229,85 +258,105 @@ Citizen citizenFromJson(String str) => Citizen.fromJson(json.decode(str));
 String citizenToJson(Citizen data) => json.encode(data.toJson());
 
 class Citizen {
-  String licensePlate;
-  String vehicleType;
-  String vehicleColor;
-  String address;
-  String status;
-  String currentAddress;
-  String reportedDate;
-  String towedByCraneDate;
-  String arrivalAtParkinglot;
-  String releaseDate;
-  String lat;
-  String lon;
-  List<Photo> photos;
+    String registrationNumber;
+    String licensePlate;
+    String registrationDocument;
+    String vehicleType;
+    String vehicleColor;
+    String model;
+    String year;
+    String reference;
+    String status;
+    String reportedBy;
+    String reportedDate;
+    dynamic towedByCraneDate;
+    dynamic arrivalAtParkinglot;
+    dynamic releaseDate;
+    dynamic releasedBy;
+    String lat;
+    String lon;
+    List<Photo> photos;
 
-  Citizen({
-    required this.licensePlate,
-    required this.vehicleType,
-    required this.vehicleColor,
-    required this.address,
-    required this.status,
-    required this.currentAddress,
-    required this.reportedDate,
-    required this.towedByCraneDate,
-    required this.arrivalAtParkinglot,
-    required this.releaseDate,
-    required this.lat,
-    required this.lon,
-    required this.photos,
-  });
+    Citizen({
+        required this.registrationNumber,
+        required this.licensePlate,
+        required this.registrationDocument,
+        required this.vehicleType,
+        required this.vehicleColor,
+        required this.model,
+        required this.year,
+        required this.reference,
+        required this.status,
+        required this.reportedBy,
+        required this.reportedDate,
+        required this.towedByCraneDate,
+        required this.arrivalAtParkinglot,
+        required this.releaseDate,
+        required this.releasedBy,
+        required this.lat,
+        required this.lon,
+        required this.photos,
+    });
 
-  factory Citizen.fromJson(Map<String, dynamic> json) => Citizen(
-        licensePlate: json["LicensePlate"],
-        vehicleType: json["VehicleType"],
-        vehicleColor: json["VehicleColor"],
-        address: json["Address"],
-        status: json["Status"],
-        currentAddress: json["CurrentAddress"],
-        reportedDate: json["ReportedDate"],
-        towedByCraneDate: json["TowedByCraneDate"],
-        arrivalAtParkinglot: json["ArrivalAtParkinglot"],
-        releaseDate: json["ReleaseDate"],
-        lat: json["Lat"],
-        lon: json["Lon"],
-        photos: List<Photo>.from(json["Photos"].map((x) => Photo.fromJson(x))),
-      );
+    factory Citizen.fromJson(Map<String, dynamic> json) => Citizen(
+        registrationNumber: json["registrationNumber"],
+        licensePlate: json["licensePlate"],
+        registrationDocument: json["registrationDocument"],
+        vehicleType: json["vehicleType"],
+        vehicleColor: json["vehicleColor"],
+        model: json["model"],
+        year: json["year"],
+        reference: json["reference"],
+        status: json["status"],
+        reportedBy: json["reportedBy"],
+        reportedDate: json["reportedDate"],
+        towedByCraneDate: json["towedByCraneDate"],
+        arrivalAtParkinglot: json["arrivalAtParkinglot"],
+        releaseDate: json["releaseDate"],
+        releasedBy: json["releasedBy"],
+        lat: json["lat"],
+        lon: json["lon"],
+        photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
+    );
 
-  Map<String, dynamic> toJson() => {
-        "LicensePlate": licensePlate,
-        "VehicleType": vehicleType,
-        "VehicleColor": vehicleColor,
-        "Address": address,
-        "Status": status,
-        "CurrentAddress": currentAddress,
-        "ReportedDate": reportedDate,
-        "TowedByCraneDate": towedByCraneDate,
-        "ArrivalAtParkinglot": arrivalAtParkinglot,
-        "ReleaseDate": releaseDate,
-        "Lat": lat,
-        "Lon": lon,
-        "Photos": List<dynamic>.from(photos.map((x) => x.toJson())),
-      };
+    Map<String, dynamic> toJson() => {
+        "registrationNumber": registrationNumber,
+        "licensePlate": licensePlate,
+        "registrationDocument": registrationDocument,
+        "vehicleType": vehicleType,
+        "vehicleColor": vehicleColor,
+        "model": model,
+        "year": year,
+        "reference": reference,
+        "status": status,
+        "reportedBy": reportedBy,
+        "reportedDate": reportedDate,
+        "towedByCraneDate": towedByCraneDate,
+        "arrivalAtParkinglot": arrivalAtParkinglot,
+        "releaseDate": releaseDate,
+        "releasedBy": releasedBy,
+        "lat": lat,
+        "lon": lon,
+        "photos": List<dynamic>.from(photos.map((x) => x.toJson())),
+    };
 }
 
 class Photo {
-  String fileType;
-  String file;
+    String file;
+    String fileType;
 
-  Photo({
-    required this.fileType,
-    required this.file,
-  });
+    Photo({
+        required this.file,
+        required this.fileType,
+    });
 
-  factory Photo.fromJson(Map<String, dynamic> json) => Photo(
-        fileType: json["FileType"],
-        file: json["File"],
-      );
+    factory Photo.fromJson(Map<String, dynamic> json) => Photo(
+        file: json["file"],
+        fileType: json["fileType"],
+    );
 
-  Map<String, dynamic> toJson() => {
-        "FileType": fileType,
-        "File": file,
-      };
+    Map<String, dynamic> toJson() => {
+        "file": file,
+        "fileType": fileType,
+    };
 }

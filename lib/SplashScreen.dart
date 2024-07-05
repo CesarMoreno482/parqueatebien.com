@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Center(
                 child: Image.asset(
-                  'assets/image/LOGO_PARQUEATE.png',
+                  'assets/image/LOGO_PARQUEATE_splash.png',
                   height: 200, // Ajusta el tamaño de la imagen según sea necesario
                 ),
               ),

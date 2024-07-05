@@ -1,24 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:web/map.dart';
 
 class ReportScreen extends StatelessWidget {
- final String licensePlate;
- final String address;
- final String status;
- final String currentAddress;
- final String reportedDate;
- final String towedByCraneDate;
- final String arrivalAtParkinglot;
- final String releaseDate;
+  final String registrationNumber;
+  final String licensePlate;
+  final String registrationDocument;
+  final String vehicleType;
+  final String vehicleColor;
+  final String model;
+  final String year;
+  final String reference;
+  final String status;
+  final String reportedDate;
+  final dynamic towedByCraneDate;
+  final dynamic arrivalAtParkinglot;
+  final dynamic releaseDate;
+  final double lat;
+  final double lon;
+  final List<String> photos;
 
   ReportScreen({
+    required this.registrationNumber,
     required this.licensePlate,
-    required this.address,
+    required this.registrationDocument,
+    required this.vehicleType,
+    required this.vehicleColor,
+    required this.model,
+    required this.year,
+    required this.reference,
     required this.status,
-    required this.currentAddress,
     required this.reportedDate,
     required this.towedByCraneDate,
     required this.arrivalAtParkinglot,
     required this.releaseDate,
+    required this.lat,
+    required this.lon,
+    required this.photos,
   });
 
   Color _getButtonColor(String status) {
@@ -40,7 +57,7 @@ class ReportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: Text('Información del Reporte'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -55,16 +72,16 @@ class ReportScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5),
-             Center(
+            Center(
               child: Text(
-                'Infomacion del reporte',
+                'Información del reporte',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF010F56)
+                  color: Color(0xFF010F56),
                 ),
               ),
-            ), 
+            ),
             const SizedBox(height: 50),
             Center(
               child: Text(
@@ -78,43 +95,81 @@ class ReportScreen extends StatelessWidget {
             const SizedBox(height: 16.0),
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _getButtonColor(status), // Color del botón según el estado
+                  backgroundColor: _getButtonColor(status), 
                 ),
                 child: Text(
-                  '$status',
+                  status,
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
             const SizedBox(height: 16.0),
-           
-            
-  Center(
-    child: Column(
-      children: [
-        _buildInfoRow('Fecha y Hora de Incautación', reportedDate),
-        _buildInfoRow('Ubicación Actual', currentAddress),
-        _buildInfoRow('Fecha y Hora de Llegada al Centro', arrivalAtParkinglot),
-      ],
-    ),
-  ),
-
-           if (status.toLowerCase() == 'retenido') ...[
-  const SizedBox(height: 30),
-  Center(
-    child: _buildTextBox(
-      'Instrucciones para la recuperacion de su vehiculo',
-      'Puede liberar su vehículo visitando el Centro de Retención de Vehículos del programa "Parquéate Bien", ubicado en la Avenida Tiradentes #17, sector Naco, en horarios de 8:00 AM a 7:00 PM.',
-    ),
-  ),
-],
-            
+            Center(
+              child: Column(
+                children: [
+                  _buildInfoRow('Fecha y Hora de Incautación', reportedDate),
+                  _buildInfoRow('Referencias', reference),
+                  _buildInfoRow('Fecha y Hora de Llegada al Centro', arrivalAtParkinglot.toString()),
+                ],
+              ),
+            ),
+            const SizedBox(height: 25),
+            if (status.toLowerCase() != 'liberado') ...[
+              Center(
+                child: _buildTextBox(
+                  'Instrucciones para la recuperación de su vehículo',
+                  'Puede liberar su vehículo visitando el Centro de Retención de Vehículos del programa "Parquéate Bien", ubicado en la Avenida Tiradentes #17, sector Naco, en horarios de 8:00 AM a 7:00 PM.',
+                ),
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: Text(
+                  'Ubicación de canodromo',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF010F56),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              Center(
+                child: Container(
+                  height: 150, 
+                  width: 300,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xFF010F56)),
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), 
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: MapWidget( 
+                      destinationLat: lat,
+                      destinationLon: lon,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+         
+        },
+        child: Icon(Icons.chat),
+        backgroundColor: Colors.blue,
       ),
     );
   }
@@ -131,7 +186,7 @@ class ReportScreen extends StatelessWidget {
             color: Color(0xFF010F56),
           ),
         ),
-        Text(value, style: TextStyle(fontSize: 18)),
+        Text(value ?? 'N/A', style: TextStyle(fontSize: 18)), 
         const SizedBox(height: 8.0),
       ],
     );
@@ -152,7 +207,8 @@ class ReportScreen extends StatelessWidget {
         const SizedBox(height: 8.0),
         Container(
           padding: const EdgeInsets.all(20.0),
-          width: 400,
+          width: 350,
+          height: 160,
           constraints: BoxConstraints(
             minHeight: 150.0,
           ),
@@ -162,7 +218,7 @@ class ReportScreen extends StatelessWidget {
           ),
           child: Text(
             value,
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 16),
           ),
         ),
         const SizedBox(height: 8.0),

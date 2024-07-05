@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'ReportScreen.dart';
+import 'package:web/map.dart';
 
 class PlacaScreen extends StatelessWidget {
+  final String registrationNumber;
   final String licensePlate;
+  final String registrationDocument;
   final String vehicleType;
   final String vehicleColor;
-  final String address;
+  final String model;
+  final String year;
+  final String reference;
   final String status;
-  final String currentAddress;
   final String reportedDate;
-  final String towedByCraneDate;
-  final String arrivalAtParkinglot;
-  final String releaseDate;
-  final String lat;
-  final String lon;
-  final List<String> photos; // Asegúrate de que esta es una lista de cadenas base64
+  final dynamic towedByCraneDate;
+  final dynamic arrivalAtParkinglot;
+  final dynamic releaseDate;
+  final double lat;
+  final double lon;
+  final List<String> photos;
 
   PlacaScreen({
+    required this.registrationNumber,
     required this.licensePlate,
+    required this.registrationDocument,
     required this.vehicleType,
     required this.vehicleColor,
-    required this.address,
+    required this.model,
+    required this.year,
+    required this.reference,
     required this.status,
-    required this.currentAddress,
     required this.reportedDate,
     required this.towedByCraneDate,
     required this.arrivalAtParkinglot,
@@ -52,88 +59,104 @@ class PlacaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Información del Vehículo'),
+        title: Text('Datos del Vehículo'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Image.asset(
-                'assets/image/LOGO_PARQUEATE.png',
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            Center(
-              child: Text(
-                'Datos del Vehículo',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Acción del botón
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _getButtonColor(status),
-                ),
-                child: Text(
-                  '$status',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20.0),
-            Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('MAS INFORMACION'),
-                  IconButton(
-                    icon: Icon(Icons.info),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ReportScreen(
-                            licensePlate: licensePlate,
-                            address: address,
-                            status: status,
-                            reportedDate: reportedDate,
-                            towedByCraneDate: towedByCraneDate,
-                            currentAddress: currentAddress,
-                            arrivalAtParkinglot: arrivalAtParkinglot,
-                            releaseDate: releaseDate,
-                          ),
-                        ),
-                      );
-                    },
+                  Image.asset(
+                    'assets/image/LOGO_PARQUEATE.png',
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 60),
-            if (status.toLowerCase() != 'liberado') ...[
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  const SizedBox(height: 16.0),
+                  Text(
+                    'Datos del Vehículo',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Acción del botón
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _getButtonColor(status),
+                    ),
+                    child: Text(
+                      status,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Más info'),
+                      IconButton(
+                        icon: Icon(Icons.info),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReportScreen(
+                                registrationNumber: registrationNumber,
+                                licensePlate: licensePlate,
+                                registrationDocument: registrationDocument,
+                                vehicleType: vehicleType,
+                                vehicleColor: vehicleColor,
+                                model: model,
+                                year: year,
+                                reference: reference,
+                                status: status,
+                                reportedDate: reportedDate,
+                                towedByCraneDate: towedByCraneDate,
+                                arrivalAtParkinglot: arrivalAtParkinglot,
+                                releaseDate: releaseDate,
+                                lat: lat,
+                                lon: lon,
+                                photos: photos,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20.0),
+                  if (status.toLowerCase() != 'liberado') ...[
+                    _buildInfoRow('Número de registro', registrationNumber),
+                    Divider(height: 40),
                     _buildInfoRow('Número de Placa', licensePlate),
-                    Divider(height: 50),
+                    Divider(height: 40),
                     _buildInfoRow('Tipo de Vehículo', vehicleType),
-                    Divider(height: 50),
+                    Divider(height: 40),
                     _buildInfoRow('Color', vehicleColor),
-                    Divider(height: 50),
-                    _buildInfoRow('Ubicación de la Retención', address),
-                    Divider(height: 50),
+                    Divider(height: 40),
+                    _buildInfoRow('Modelo', model),
+                    Divider(height: 40),
+                    _buildInfoRow('Año', year),
+                    Divider(height: 40),
+                    _buildInfoRow('Referencia', reference),
+                    Divider(height: 40),
+                    _buildInfoRow('Ubicación de la Retención', ''),
+                    const SizedBox(height: 1.0),
+                    Container(
+                      height: 200,
+                      width: 350,
+                      child: MapWidget(
+                        destinationLat: lat,
+                        destinationLon: lon,
+                      ),
+                    ),
+                    Divider(height: 40),
                     if (photos.isNotEmpty) ...[
                       Text(
                         'Fotos del Vehículo',
@@ -163,30 +186,45 @@ class PlacaScreen extends StatelessWidget {
                       ),
                     ],
                   ],
-                ),
+                  const SizedBox(height: 15.0), 
+                ],
               ),
-            ],
-          ],
-        ),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () {
+                // Acción del botón de chat
+              },
+              child: Icon(Icons.chat),
+              backgroundColor: Colors.blue,
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildInfoRow(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF010F56),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center, 
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF010F56),
+            ),
           ),
-        ),
-        Text(value, style: TextStyle(fontSize: 18)),
-        const SizedBox(height: 8.0),
-      ],
+          const SizedBox(height: 4.0),
+          Text(value, style: TextStyle(fontSize: 18)),
+        ],
+      ),
     );
   }
 }
