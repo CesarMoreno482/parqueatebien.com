@@ -133,19 +133,12 @@ class PlacaScreen extends StatelessWidget {
                   const SizedBox(height: 20.0),
                   if (status.toLowerCase() != 'liberado') ...[
                     _buildInfoRow('Número de registro', registrationNumber),
-                    Divider(height: 40),
                     _buildInfoRow('Número de Placa', licensePlate),
-                    Divider(height: 40),
                     _buildInfoRow('Tipo de Vehículo', vehicleType),
-                    Divider(height: 40),
                     _buildInfoRow('Color', vehicleColor),
-                    Divider(height: 40),
                     _buildInfoRow('Modelo', model),
-                    Divider(height: 40),
                     _buildInfoRow('Año', year),
-                    Divider(height: 40),
                     _buildInfoRow('Referencia', reference),
-                    Divider(height: 40),
                     _buildInfoRow('Ubicación de la Retención', ''),
                     const SizedBox(height: 1.0),
                     Container(
@@ -156,7 +149,6 @@ class PlacaScreen extends StatelessWidget {
                         destinationLon: lon,
                       ),
                     ),
-                    Divider(height: 40),
                     if (photos.isNotEmpty) ...[
                       Text(
                         'Fotos del Vehículo',
@@ -196,7 +188,7 @@ class PlacaScreen extends StatelessWidget {
             right: 20,
             child: FloatingActionButton(
               onPressed: () {
-                // Acción del botón de chat
+              
               },
               child: Icon(Icons.chat),
               backgroundColor: Colors.blue,
