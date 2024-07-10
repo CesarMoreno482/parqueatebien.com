@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'ReportScreen.dart';
 import 'package:web/map.dart';
+import 'package:geocoding/geocoding.dart';
 
 class PlacaScreen extends StatelessWidget {
   final String registrationNumber;
@@ -58,165 +59,249 @@ class PlacaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Datos del Vehículo'),
+       appBar: AppBar(
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0), 
+              child: Center(
+                child: Image.asset(
+                  'assets/image/LOGO_PARQUEATE.png',
+                  height: 75,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(height: 18.0),
+            Container(
+              height: 40,
+              width: double.infinity,
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 243, 243, 243),
+              ),
+              child: Text(
+                'DATOS DEL VEHÍCULO',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF010F56),
+                ),
+              ),
+            ),
+
+              const SizedBox(height: 16.0),
+               Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _getButtonColor(status),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  ),
+                  child: Text(
+                    'Vehículo $status',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(width: 265.0),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReportScreen(
+                          registrationNumber: registrationNumber,
+                          licensePlate: licensePlate,
+                          registrationDocument: registrationDocument,
+                          vehicleType: vehicleType,
+                          vehicleColor: vehicleColor,
+                          model: model,
+                          year: year,
+                          reference: reference,
+                          status: status,
+                          reportedDate: reportedDate,
+                          towedByCraneDate: towedByCraneDate,
+                          arrivalAtParkinglot: arrivalAtParkinglot,
+                          releaseDate: releaseDate,
+                          lat: lat,
+                          lon: lon,
+                          photos: photos,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.info, color: Color(0xFF010F56)),
+                  label: Text(
+                    'Más información',
+                    style: TextStyle(color: Color(0xFF010F56)),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: Color(0xFF010F56)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  ),
+                ),
+              ],
+            ),
+
+              const SizedBox(height: 25.0),
+              Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 20.0,
+                runSpacing: 20.0,
                 children: [
-                  Image.asset(
-                    'assets/image/LOGO_PARQUEATE.png',
-                    height: 100,
-                    fit: BoxFit.cover,
-                  ),
-                  const SizedBox(height: 16.0),
-                  Text(
-                    'Datos del Vehículo',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Acción del botón
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _getButtonColor(status),
-                    ),
+                  _buildInfoColumn('Número de placa', licensePlate),
+                  _buildInfoColumn('Tipo de vehículo', vehicleType),
+                  _buildInfoColumn('Color', vehicleColor),
+                  _buildInfoColumn('Modelo', model),
+                  _buildInfoColumn('Año', year),
+                  _buildInfoColumn('Referencia', reference),
+                ],
+              ),
+            ),
+              const SizedBox(height: 20.0),
+              Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      status,
-                      style: TextStyle(color: Colors.white),
+                      'Ubicación de la retención',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF010F56),
+                      ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Más info'),
-                      IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ReportScreen(
-                                registrationNumber: registrationNumber,
-                                licensePlate: licensePlate,
-                                registrationDocument: registrationDocument,
-                                vehicleType: vehicleType,
-                                vehicleColor: vehicleColor,
-                                model: model,
-                                year: year,
-                                reference: reference,
-                                status: status,
-                                reportedDate: reportedDate,
-                                towedByCraneDate: towedByCraneDate,
-                                arrivalAtParkinglot: arrivalAtParkinglot,
-                                releaseDate: releaseDate,
-                                lat: lat,
-                                lon: lon,
-                                photos: photos,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                  const SizedBox(height: 10.0),
+                  FutureBuilder<String>(
+                    future: _getAddressFromLatLon(lat, lon),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error al obtener la dirección');
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(
+                            snapshot.data ?? 'Dirección no disponible',
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  const SizedBox(height: 20.0),
-                  if (status.toLowerCase() != 'liberado') ...[
-                    _buildInfoRow('Número de registro', registrationNumber),
-                    _buildInfoRow('Número de Placa', licensePlate),
-                    _buildInfoRow('Tipo de Vehículo', vehicleType),
-                    _buildInfoRow('Color', vehicleColor),
-                    _buildInfoRow('Modelo', model),
-                    _buildInfoRow('Año', year),
-                    _buildInfoRow('Referencia', reference),
-                    _buildInfoRow('Ubicación de la Retención', ''),
-                    const SizedBox(height: 1.0),
-                    Container(
-                      height: 200,
-                      width: 350,
-                      child: MapWidget(
-                        destinationLat: lat,
-                        destinationLon: lon,
-                      ),
+                  const SizedBox(height: 10.0),
+                  Container(
+                    height: 150,
+                    width: 625,
+                    child: MapWidget(
+                      destinationLat: lat,
+                      destinationLon: lon,
                     ),
-                    if (photos.isNotEmpty) ...[
-                      Text(
-                        'Fotos del Vehículo',
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            if (photos.isNotEmpty) ...[
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        'Fotos del vehículo',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF010F56),
                         ),
+                        textAlign: TextAlign.left,
                       ),
-                      const SizedBox(height: 8.0),
-                      Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: photos.map((photo) {
-                          return SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(4.0),
-                              child: Image.memory(
-                                base64Decode(photo),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ],
+                    ),
+
+                const SizedBox(height: 10.0),
+                 Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: photos.map((photo) {
+                  return SizedBox(
+                    width: 115,
+                    height: 100,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4.0),
+                      child: Image.memory(
+                        base64Decode(photo),
+                        fit: BoxFit.cover,
+                    ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ],
-                  const SizedBox(height: 15.0), 
-                ],
+                ),
               ),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: FloatingActionButton(
-              onPressed: () {
-              
-              },
-              child: Icon(Icons.chat),
-              backgroundColor: Colors.blue,
-            ),
-          ),
-        ],
+            ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center, 
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF010F56),
-            ),
+  Widget _buildInfoColumn(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF010F56),
           ),
-          const SizedBox(height: 4.0),
-          Text(value, style: TextStyle(fontSize: 18)),
-        ],
-      ),
+        ),
+        const SizedBox(height: 4.0),
+        Text(value, style: TextStyle(fontSize: 18)),
+      ],
     );
   }
+
+  Future<String> _getAddressFromLatLon(double lat, double lon) async {
+  try {
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
+    if (placemarks.isNotEmpty) {
+      Placemark place = placemarks[0];
+      return '${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+    }
+  } catch (e) {
+    print(e);
+    return 'No se pudo obtener la dirección';
+  }
+  return 'No se pudo obtener la dirección';
+}
 }

@@ -51,7 +51,7 @@ Future<void> _getCitizen() async {
   String licensePlate = _licensePlateController.text;
   try {
     var response = await http.get(
-      Uri.parse('http://localhost:8089/api/reporte/$licensePlate'),
+      Uri.parse('https://parqueatebiendemo.azurewebsites.net/api/reporte/$licensePlate'),
     );
 
     if (response.statusCode == 200) {
@@ -174,7 +174,7 @@ Future<void> _getCitizen() async {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                       Text(
                           'Placa:',
                           style: TextStyle(
                             fontSize: 15,
@@ -183,14 +183,18 @@ Future<void> _getCitizen() async {
                         ),
                         const SizedBox(height: 5),
                         SizedBox(
-                          width: constraints.maxWidth * 0.8,
+                          width: 700,
                           child: TextField(
                             controller: _licensePlateController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               hintText: 'Ingresar Dígitos De Placa',
-                              border: OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: BorderSide.none,
+                              ),
                               filled: true,
-                              fillColor: Color.fromARGB(255, 255, 255, 255),
+                              fillColor: Color.fromARGB(255, 240, 240, 240),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                             ),
                             maxLength: 7,
                             onChanged: (value) {

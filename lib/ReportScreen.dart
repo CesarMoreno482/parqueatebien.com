@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:web/map.dart';
 
@@ -53,46 +55,53 @@ class ReportScreen extends StatelessWidget {
     }
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Información del Reporte'),
+       appBar: AppBar(
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
-              child: Image.asset(
-                'assets/image/LOGO_PARQUEATE.png',
-                height: 100,
-                fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0), 
+              child: Center(
+                child: Image.asset(
+                  'assets/image/LOGO_PARQUEATE.png',
+                  height: 75,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            const SizedBox(height: 5),
-            Center(
+            const SizedBox(height: 10.0),
+            Container(
+              height: 40,
+              width: double.infinity,
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 243, 243, 243),
+              ),
               child: Text(
-                'Información del reporte',
+                'DATOS DEL VEHÍCULO',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF010F56),
                 ),
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height:2),
             Center(
-              child: Text(
-                'Status:',
+              child: Text('',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 10.0),
             Center(
               child: ElevatedButton(
                 onPressed: () {},
@@ -115,12 +124,13 @@ class ReportScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 20),
             if (status.toLowerCase() != 'liberado') ...[
               Center(
                 child: _buildTextBox(
                   'Instrucciones para la recuperación de su vehículo',
                   'Puede liberar su vehículo visitando el Centro de Retención de Vehículos del programa "Parquéate Bien", ubicado en la Avenida Tiradentes #17, sector Naco, en horarios de 8:00 AM a 7:00 PM.',
+                  
                 ),
               ),
               const SizedBox(height: 30),
@@ -138,7 +148,7 @@ class ReportScreen extends StatelessWidget {
               Center(
                 child: Container(
                   height: 150, 
-                  width: 300,
+                  width: 600,
                   decoration: BoxDecoration(
                     border: Border.all(color: Color(0xFF010F56)),
                     borderRadius: BorderRadius.circular(10.0),
@@ -186,7 +196,7 @@ class ReportScreen extends StatelessWidget {
             color: Color(0xFF010F56),
           ),
         ),
-        Text(value ?? 'N/A', style: TextStyle(fontSize: 18)), 
+        Text(value, style: TextStyle(fontSize: 18)), 
         const SizedBox(height: 8.0),
       ],
     );
@@ -207,8 +217,8 @@ class ReportScreen extends StatelessWidget {
         const SizedBox(height: 8.0),
         Container(
           padding: const EdgeInsets.all(20.0),
-          width: 350,
-          height: 160,
+          width: 600,
+          height: 75,
           constraints: BoxConstraints(
             minHeight: 150.0,
           ),

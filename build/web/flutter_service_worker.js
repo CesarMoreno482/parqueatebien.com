@@ -12,7 +12,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "a2e04f2b700e61a9128d2fbeb48abb43
 "assets/assets/image/LOGO_PARQUEATE_splash.png": "d4d3310a7614efeb422e955ce9c28f1d",
 "assets/FontManifest.json": "7b2a36307916a9721811788013e65289",
 "assets/fonts/MaterialIcons-Regular.otf": "200c87f9db1ebf91e215769dd7b3e6a5",
-"assets/NOTICES": "fd7260644b2128a7e9690e83ba26b530",
+"assets/NOTICES": "d6171f512014325b1e12afa1dc54a11f",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
 "assets/web/icons/android-chrome-192x192.png": "5cc63b70a96ee45ad8c8d5f634ac328a",
 "assets/web/icons/android-chrome-384x384.png": "f579f49f47723006c0806c1dce4affbc",
@@ -47,7 +47,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "a2e04f2b700e61a9128d2fbeb48abb43
 "icons/site.webmanifest": "57425a403714747b47dd0c0b3524a5f1",
 "index.html": "26a896cdcd2ccd8e016c236788548e67",
 "/": "26a896cdcd2ccd8e016c236788548e67",
-"main.dart.js": "bf3bf81fd41745dc4aa6a94852b09651",
+"main.dart.js": "8d78fd818c5b9833f795995b959febc4",
 "manifest.json": "4734db19b089f1a4d7b37fdc9824bcd2",
 "version.json": "b2ca98868916c27e3ceef55315da0a63"};
 // The application shell files that are downloaded before a service worker can
