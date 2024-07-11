@@ -59,14 +59,13 @@ class PlacaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20.0), 
+              padding: const EdgeInsets.only(top: 20.0),
               child: Center(
                 child: Image.asset(
                   'assets/image/LOGO_PARQUEATE.png',
@@ -93,15 +92,12 @@ class PlacaScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-              const SizedBox(height: 16.0),
-               Row(
+            const SizedBox(height: 16.0),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _getButtonColor(status),
                     shape: RoundedRectangleBorder(
@@ -156,9 +152,8 @@ class PlacaScreen extends StatelessWidget {
                 ),
               ],
             ),
-
-              const SizedBox(height: 25.0),
-              Container(
+            const SizedBox(height: 25.0),
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Wrap(
                 alignment: WrapAlignment.center,
@@ -174,8 +169,8 @@ class PlacaScreen extends StatelessWidget {
                 ],
               ),
             ),
-              const SizedBox(height: 20.0),
-              Container(
+            const SizedBox(height: 20.0),
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,22 +238,21 @@ class PlacaScreen extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                     ),
-
-                const SizedBox(height: 10.0),
-                 Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 8.0,
-                runSpacing: 8.0,
-                children: photos.map((photo) {
-                  return SizedBox(
-                    width: 115,
-                    height: 100,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child: Image.memory(
-                        base64Decode(photo),
-                        fit: BoxFit.cover,
-                    ),
+                    const SizedBox(height: 10.0),
+                    Wrap(
+                      alignment: WrapAlignment.start,
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: photos.map((photo) {
+                        return SizedBox(
+                          width: 115,
+                          height: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4.0),
+                            child: Image.memory(
+                              base64Decode(photo),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         );
                       }).toList(),
@@ -275,7 +269,7 @@ class PlacaScreen extends StatelessWidget {
 
   Widget _buildInfoColumn(String label, String value) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
@@ -292,16 +286,16 @@ class PlacaScreen extends StatelessWidget {
   }
 
   Future<String> _getAddressFromLatLon(double lat, double lon) async {
-  try {
-    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
-    if (placemarks.isNotEmpty) {
-      Placemark place = placemarks[0];
-      return '${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks[0];
+        return '${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+      }
+    } catch (e) {
+      print(e);
+      return 'No se pudo obtener la dirección';
     }
-  } catch (e) {
-    print(e);
     return 'No se pudo obtener la dirección';
   }
-  return 'No se pudo obtener la dirección';
-}
 }
