@@ -166,7 +166,7 @@ class PlacaScreen extends StatelessWidget {
                   _buildInfoColumn('Número de placa', licensePlate),
                   _buildInfoColumn('Tipo de vehículo', vehicleType),
                   _buildInfoColumn('Color', vehicleColor),
-                  _buildInfoColumn('Modelo', model),
+                  _buildInfoColumn('Marca', model),
                   _buildInfoColumn('Año', year),
                   _buildInfoColumn('Referencia', reference),
                 ],
