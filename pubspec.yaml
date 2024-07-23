@@ -31,7 +31,7 @@ flutter:
   assets:
     - assets/image/fondo_splash.png
     - assets/image/LOGO_INTRANT.png
-    - assets/image/LOGO_PARQUEATE.png.
+    - assets/image/LOGO_PARQUEATE.png
     - assets/image/LOGO_PARQUEATE_splash.png
     - web/icons/
 

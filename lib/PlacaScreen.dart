@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'ReportScreen.dart';
@@ -22,7 +24,8 @@ class PlacaScreen extends StatelessWidget {
   final double lon;
   final List<String> photos;
 
-  const PlacaScreen({super.key, 
+  const PlacaScreen({
+    super.key,
     required this.registrationNumber,
     required this.licensePlate,
     required this.registrationDocument,
@@ -163,7 +166,7 @@ class PlacaScreen extends StatelessWidget {
                   _buildInfoColumn('Número de placa', licensePlate),
                   _buildInfoColumn('Tipo de vehículo', vehicleType),
                   _buildInfoColumn('Color', vehicleColor),
-                  _buildInfoColumn('Marca', model),
+                  _buildInfoColumn('Modelo', model),
                   _buildInfoColumn('Año', year),
                   _buildInfoColumn('Referencia', reference),
                 ],
@@ -207,7 +210,6 @@ class PlacaScreen extends StatelessWidget {
                       }
                     },
                   ),
-                  
                   const SizedBox(height: 10.0),
                   SizedBox(
                     height: 150,
@@ -265,17 +267,13 @@ class PlacaScreen extends StatelessWidget {
           ],
         ),
       ),
-       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-         
-        },
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.chat),
         backgroundColor: Colors.blue,
-        child: const Icon(Icons.chat),
       ),
     );
-    
   }
-  
 
   Widget _buildInfoColumn(String label, String value) {
     return Column(
@@ -284,13 +282,16 @@ class PlacaScreen extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Color(0xFF010F56),
           ),
         ),
-        const SizedBox(height: 4.0),
-        Text(value, style: const TextStyle(fontSize: 18)),
+        const SizedBox(height: 8.0),
+        Text(
+          value,
+          style: const TextStyle(fontSize: 16),
+        ),
       ],
     );
   }
@@ -299,10 +300,12 @@ class PlacaScreen extends StatelessWidget {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, lon);
       if (placemarks.isNotEmpty) {
-        Placemark place = placemarks[0];
-        return '${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+        Placemark placemark = placemarks.first;
+        return '${placemark.street}, ${placemark.locality}, ${placemark.postalCode}, ${placemark.country}';
       }
-    } catch (e) {}
-    return 'No se pudo obtener la dirección';
+    } catch (e) {
+      print('Error al obtener la dirección: $e');
+    }
+    return 'Dirección no disponible';
   }
 }

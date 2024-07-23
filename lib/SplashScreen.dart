@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:web/main.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -13,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainApp()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainApp()));
     });
   }
   
@@ -36,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Center(
                 child: Image.asset(
                   'assets/image/LOGO_PARQUEATE_splash.png',
-                  height: 200, 
+                  height: 200, // Ajusta el tamaño de la imagen según sea necesario
                 ),
               ),
               const SizedBox(height: 20), 
@@ -49,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Center(
               child: Image.asset(
                 'assets/image/LOGO_INTRANT.png',
-                height: 50, 
+                height: 50, // Ajusta el tamaño de la tercera imagen según sea necesario
               ),
             ),
           ),

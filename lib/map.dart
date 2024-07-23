@@ -6,10 +6,10 @@ class MapWidget extends StatelessWidget {
   final double destinationLon;
 
   const MapWidget({
-    super.key,
+    Key? key,
     required this.destinationLat,
     required this.destinationLon,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
