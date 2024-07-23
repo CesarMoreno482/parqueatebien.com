@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:web/map.dart';
@@ -21,7 +20,7 @@ class ReportScreen extends StatelessWidget {
   final double lon;
   final List<String> photos;
 
-  ReportScreen({
+  const ReportScreen({super.key, 
     required this.registrationNumber,
     required this.licensePlate,
     required this.registrationDocument,
@@ -79,10 +78,10 @@ class ReportScreen extends StatelessWidget {
               height: 40,
               width: double.infinity,
               padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 243, 243, 243),
               ),
-              child: Text(
+              child: const Text(
                 'DATOS DEL VEHÍCULO',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -93,7 +92,7 @@ class ReportScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height:2),
-            Center(
+            const Center(
               child: Text('',
                 style: TextStyle(
                   fontSize: 24,
@@ -110,7 +109,7 @@ class ReportScreen extends StatelessWidget {
                 ),
                 child: Text(
                   status,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
@@ -134,7 +133,7 @@ class ReportScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              Center(
+              const Center(
                 child: Text(
                   'Ubicación de canodromo',
                   style: TextStyle(
@@ -150,14 +149,14 @@ class ReportScreen extends StatelessWidget {
                   height: 150, 
                   width: 600,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF010F56)),
+                    border: Border.all(color: const Color(0xFF010F56)),
                     borderRadius: BorderRadius.circular(10.0),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3), 
+                        offset: const Offset(0, 3), 
                       ),
                     ],
                   ),
@@ -178,8 +177,8 @@ class ReportScreen extends StatelessWidget {
         onPressed: () {
          
         },
-        child: Icon(Icons.chat),
         backgroundColor: Colors.blue,
+        child: const Icon(Icons.chat),
       ),
     );
   }
@@ -190,13 +189,13 @@ class ReportScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Color(0xFF010F56),
           ),
         ),
-        Text(value, style: TextStyle(fontSize: 18)), 
+        Text(value, style: const TextStyle(fontSize: 18)), 
         const SizedBox(height: 8.0),
       ],
     );
@@ -208,7 +207,7 @@ class ReportScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Color(0xFF010F56),
@@ -219,16 +218,16 @@ class ReportScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           width: 600,
           height: 75,
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             minHeight: 150.0,
           ),
           decoration: BoxDecoration(
-            border: Border.all(color: Color.fromARGB(255, 136, 155, 252)),
+            border: Border.all(color: const Color.fromARGB(255, 136, 155, 252)),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Text(
             value,
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
         ),
         const SizedBox(height: 8.0),

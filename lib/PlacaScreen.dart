@@ -22,7 +22,7 @@ class PlacaScreen extends StatelessWidget {
   final double lon;
   final List<String> photos;
 
-  PlacaScreen({
+  const PlacaScreen({super.key, 
     required this.registrationNumber,
     required this.licensePlate,
     required this.registrationDocument,
@@ -79,10 +79,10 @@ class PlacaScreen extends StatelessWidget {
               height: 40,
               width: double.infinity,
               padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 243, 243, 243),
               ),
-              child: Text(
+              child: const Text(
                 'DATOS DEL VEHÍCULO',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -103,11 +103,11 @@ class PlacaScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   ),
                   child: Text(
                     'Vehículo $status',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
                 const SizedBox(width: 265.0),
@@ -137,17 +137,17 @@ class PlacaScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: Icon(Icons.info, color: Color(0xFF010F56)),
-                  label: Text(
+                  icon: const Icon(Icons.info, color: Color(0xFF010F56)),
+                  label: const Text(
                     'Más información',
                     style: TextStyle(color: Color(0xFF010F56)),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Color(0xFF010F56)),
+                    side: const BorderSide(color: Color(0xFF010F56)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   ),
                 ),
               ],
@@ -163,7 +163,7 @@ class PlacaScreen extends StatelessWidget {
                   _buildInfoColumn('Número de placa', licensePlate),
                   _buildInfoColumn('Tipo de vehículo', vehicleType),
                   _buildInfoColumn('Color', vehicleColor),
-                  _buildInfoColumn('Modelo', model),
+                  _buildInfoColumn('Marca', model),
                   _buildInfoColumn('Año', year),
                   _buildInfoColumn('Referencia', reference),
                 ],
@@ -175,8 +175,8 @@ class PlacaScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 10.0),
                     child: Text(
                       'Ubicación de la retención',
                       style: TextStyle(
@@ -192,23 +192,24 @@ class PlacaScreen extends StatelessWidget {
                     future: _getAddressFromLatLon(lat, lon),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
-                        return Text('Error al obtener la dirección');
+                        return const Text('Error al obtener la dirección');
                       } else {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
                             snapshot.data ?? 'Dirección no disponible',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                             textAlign: TextAlign.center,
                           ),
                         );
                       }
                     },
                   ),
+                  
                   const SizedBox(height: 10.0),
-                  Container(
+                  SizedBox(
                     height: 150,
                     width: 625,
                     child: MapWidget(
@@ -226,8 +227,8 @@ class PlacaScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
                         'Fotos del vehículo',
                         style: TextStyle(
@@ -264,8 +265,17 @@ class PlacaScreen extends StatelessWidget {
           ],
         ),
       ),
+       floatingActionButton: FloatingActionButton(
+        onPressed: () {
+         
+        },
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.chat),
+      ),
     );
+    
   }
+  
 
   Widget _buildInfoColumn(String label, String value) {
     return Column(
@@ -273,14 +283,14 @@ class PlacaScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Color(0xFF010F56),
           ),
         ),
         const SizedBox(height: 4.0),
-        Text(value, style: TextStyle(fontSize: 18)),
+        Text(value, style: const TextStyle(fontSize: 18)),
       ],
     );
   }
@@ -292,10 +302,7 @@ class PlacaScreen extends StatelessWidget {
         Placemark place = placemarks[0];
         return '${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
       }
-    } catch (e) {
-      print(e);
-      return 'No se pudo obtener la dirección';
-    }
+    } catch (e) {}
     return 'No se pudo obtener la dirección';
   }
 }

@@ -6,19 +6,21 @@ import 'SplashScreen.dart';
 import 'dart:io';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Parqueate Bien',
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 1, 15, 117),
-        colorScheme: ColorScheme.light(primary: Color.fromARGB(255, 1, 15, 86)),
-        scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+        primaryColor: const Color.fromARGB(255, 1, 15, 117),
+        colorScheme: const ColorScheme.light(primary: Color.fromARGB(255, 1, 15, 86)),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       home: SplashScreen(),
     );
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({Key? key}) : super(key: key);
+  const MainApp({super.key});
 
   @override
   _MainAppState createState() => _MainAppState();
@@ -68,11 +70,10 @@ Future<void> _getCitizen() async {
         try {
           lat = double.parse(citizen.lat);
           lon = double.parse(citizen.lon);
-        } catch (e) {
-          print('Error al convertir latitud o longitud: $e');
-        }
+        } catch (e) {}
 
         Navigator.push(
+    
           context,
           MaterialPageRoute(
             builder: (context) => PlacaScreen(
@@ -160,7 +161,7 @@ Future<void> _getCitizen() async {
                       fit: BoxFit.cover,
                     ),
                     const SizedBox(height: 50),
-                    Center(
+                    const Center(
                       child: Text(
                         'INTRODUZCA EL NÚMERO DE PLACA DE SU VEHÍCULO',
                         style: TextStyle(
@@ -174,7 +175,7 @@ Future<void> _getCitizen() async {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       Text(
+                       const Text(
                           'Placa:',
                           style: TextStyle(
                             fontSize: 15,
@@ -193,8 +194,8 @@ Future<void> _getCitizen() async {
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
-                              fillColor: Color.fromARGB(255, 240, 240, 240),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              fillColor: const Color.fromARGB(255, 240, 240, 240),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                             ),
                             maxLength: 7,
                             onChanged: (value) {
@@ -204,9 +205,9 @@ Future<void> _getCitizen() async {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     if (_isLoading) ...[
-                      CircularProgressIndicator(),
+                      const CircularProgressIndicator(),
                       const SizedBox(height: 2),
                     ],
                     if (_errorMessage.isNotEmpty) ...[
@@ -235,7 +236,7 @@ Future<void> _getCitizen() async {
             onPressed: _licensePlateController.text.length == 7 ? _getCitizen : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: _licensePlateController.text.length == 7
-                  ? Color.fromARGB(255, 1, 15, 86)
+                  ? const Color.fromARGB(255, 1, 15, 86)
                   : Colors.grey,
               padding: const EdgeInsets.symmetric(vertical: 20),
               shape: RoundedRectangleBorder(
@@ -243,7 +244,7 @@ Future<void> _getCitizen() async {
               ),
             ),
             child: _isLoading
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : const Text(
                     'consultar',
                     style: TextStyle(

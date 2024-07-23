@@ -6,10 +6,10 @@ class MapWidget extends StatelessWidget {
   final double destinationLon;
 
   const MapWidget({
-    Key? key,
+    super.key,
     required this.destinationLat,
     required this.destinationLon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class MapWidget extends StatelessWidget {
       ),
       markers: {
         Marker(
-          markerId: MarkerId('destination'),
+          markerId: const MarkerId('destination'),
           position: LatLng(destinationLat, destinationLon),
-          infoWindow: InfoWindow(
+          infoWindow: const InfoWindow(
             title: 'Destino',
             snippet: 'Aquí está el destino',
           ),
